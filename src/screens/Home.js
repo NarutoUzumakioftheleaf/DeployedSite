@@ -8,6 +8,7 @@ export default function Home() {
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
   const loadData = async () => {
+<<<<<<< HEAD
     let response = await fetch(
       "https://deployedsite-backend.onrender.com/api/foodData",
       {
@@ -17,6 +18,14 @@ export default function Home() {
         },
       }
     );
+=======
+    let response = await fetch("https://deployedsite-backend.onrender.com/api/foodData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+>>>>>>> beef11c07ef990b833ff818e3f3bd4df9face883
     response = await response.json();
     setFoodItem(response[0]);
     setFoodCat(response[1]);
