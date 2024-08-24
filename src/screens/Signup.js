@@ -9,18 +9,21 @@ export default function Signup() {
   });
   const handleSubmit = async (e) => {
     e.preventDefault(); //synthetic event:It combines the behavior of supported events of different browsers into one API, ensuring that events work identically across all browsers.
-    const response = await fetch("http://localhost:5000/api/createuser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: credentials.name,
-        email: credentials.email,
-        password: credentials.password,
-        location: credentials.location,
-      }),
-    });
+    const response = await fetch(
+      "https://deployedsite-backend.onrender.com/api/createuser",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: credentials.name,
+          email: credentials.email,
+          password: credentials.password,
+          location: credentials.location,
+        }),
+      }
+    );
     const json = await response.json();
     console.log(json);
     if (!json.success) alert("Enter Valid Credentials");
