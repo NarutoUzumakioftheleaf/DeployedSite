@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Card from "../components/Card";
-
 import Footer from "../components/Footer";
+
 export default function Home() {
   const [search, setSearch] = useState("");
   const [foodCat, setFoodCat] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
+
   const loadData = async () => {
-<<<<<<< HEAD
     let response = await fetch(
       "https://deployedsite-backend.onrender.com/api/foodData",
       {
@@ -18,28 +18,18 @@ export default function Home() {
         },
       }
     );
-=======
-    let response = await fetch("https://deployedsite-backend.onrender.com/api/foodData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
->>>>>>> beef11c07ef990b833ff818e3f3bd4df9face883
     response = await response.json();
     setFoodItem(response[0]);
     setFoodCat(response[1]);
-    // console.log(response[0],response[1]);
   };
+
   useEffect(() => {
     loadData();
   }, []);
 
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div>
         <div
           id="carouselExampleControls"
@@ -71,14 +61,12 @@ export default function Home() {
             <div className="carousel-caption">
               <div className="form-inline d-flex justify-content-center">
                 <input
-                  className="form-control  mr-2"
+                  className="form-control mr-2"
                   type="search"
                   placeholder="Search"
                   aria-label="Search"
                   value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}
+                  onChange={(e) => setSearch(e.target.value)}
                   style={{ marginRight: "10px" }}
                 />
               </div>
@@ -108,45 +96,38 @@ export default function Home() {
         </div>
       </div>
       <div className="container">
-        {foodCat.length !== 0
-          ? foodCat.map((data) => {
-              return (
-                <div className="row mb-3">
-                  <div key={data._id} className="fs-3 m-3">
-                    {data.CategoryName}
-                  </div>
-                  <hr />
-                  {foodItem.length !== 0 ? (
-                    foodItem
-                      .filter(
-                        (item) =>
-                          item.CategoryName === data.CategoryName &&
-                          item.name
-                            .toLowerCase()
-                            .includes(search.toLocaleLowerCase())
-                      )
-                      .map((filterItems) => {
-                        return (
-                          <div
-                            key={filterItems._id}
-                            className="col-12 col-mid-6 col-lg-3">
-                            <Card
-                              foodItem={filterItems}
-                              options={filterItems.options[0]}></Card>
-                          </div>
-                        );
-                      })
-                  ) : (
-                    <div>Not Found</div>
-                  )}
-                </div>
-              );
-            })
-          : ""}
+        {foodCat.length !== 0 ? (
+          foodCat.map((data) => (
+            <div className="row mb-3" key={data._id}>
+              <div className="fs-3 m-3">{data.CategoryName}</div>
+              <hr />
+              {foodItem.length !== 0 ? (
+                foodItem
+                  .filter(
+                    (item) =>
+                      item.CategoryName === data.CategoryName &&
+                      item.name.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((filterItems) => (
+                    <div
+                      key={filterItems._id}
+                      className="col-12 col-md-6 col-lg-3">
+                      <Card
+                        foodItem={filterItems}
+                        options={filterItems.options[0]}
+                      />
+                    </div>
+                  ))
+              ) : (
+                <div>Not Found</div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div>Loading categories...</div>
+        )}
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 }

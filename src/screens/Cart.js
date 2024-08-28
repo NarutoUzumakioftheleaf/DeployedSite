@@ -1,9 +1,11 @@
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useCart, useDispatchCart } from "../components/ContextReducer";
+
 export default function Cart() {
   let data = useCart();
   let dispatch = useDispatchCart();
+
   if (data.length === 0) {
     return (
       <div>
@@ -11,19 +13,12 @@ export default function Cart() {
       </div>
     );
   }
-  // const handleRemove = (index)=>{
-  //   console.log(index)
-  //   dispatch({type:"REMOVE",index:index})
-  // }
 
   const handleCheckOut = async () => {
     let userEmail = localStorage.getItem("userEmail");
-    // console.log(data,localStorage.getItem("userEmail"),new Date())
     let response = await fetch(
       "https://deployedsite-backend.onrender.com/api/orderData",
       {
-        // credentials: 'include',
-        // Origin:"http://localhost:3000/login",
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,6 +37,7 @@ export default function Cart() {
   };
 
   let totalPrice = data.reduce((total, food) => total + food.price, 0);
+
   return (
     <div>
       {console.log(data)}
@@ -59,19 +55,18 @@ export default function Cart() {
           </thead>
           <tbody>
             {data.map((food, index) => (
-              <tr>
+              <tr key={index}>
                 <th scope="row">{index + 1}</th>
                 <td>{food.name}</td>
                 <td>{food.qty}</td>
                 <td>{food.size}</td>
                 <td>{food.price}</td>
                 <td>
-                  <button type="button" className="btn p-0">
-                    <Delete
-                      onClick={() => {
-                        dispatch({ type: "REMOVE", index: index });
-                      }}
-                    />
+                  <button
+                    type="button"
+                    className="btn p-0"
+                    onClick={() => dispatch({ type: "REMOVE", index: index })}>
+                    <DeleteIcon />
                   </button>{" "}
                 </td>
               </tr>
