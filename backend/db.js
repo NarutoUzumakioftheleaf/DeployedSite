@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 const mongoURI =
-  "mongodb+srv://DeepaPandey:Deepa123@cluster0.e84eekb.mongodb.net/gofoodmern?retryWrites=true&w=majority";
+  "mongodb://DeepaPandey:Deepa123@ac-py1tzrk-shard-00-00.e84eekb.mongodb.net:27017,ac-py1tzrk-shard-00-01.e84eekb.mongodb.net:27017,ac-py1tzrk-shard-00-02.e84eekb.mongodb.net:27017/gofoodmern?ssl=true&replicaSet=atlas-10rxsk-shard-0&authSource=admin&retryWrites=true&w=majority&appName=Cluster0";
 
 // Define a Mongoose schema for your "food_items" collection
 const mongoDB = async () => {
